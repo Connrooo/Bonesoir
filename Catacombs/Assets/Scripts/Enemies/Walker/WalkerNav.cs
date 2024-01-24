@@ -119,10 +119,6 @@ public class WalkerNav : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 front = transform.TransformDirection(Vector3.forward);
-        Vector3 frontRight = transform.TransformDirection(Vector3.forward);
-        frontRight.y = frontRight.y + 30f;
-        Vector3 frontLeft = transform.TransformDirection(Vector3.forward);
-        frontLeft.y = frontLeft.y - 30f;
         if (Physics.SphereCast(transform.position, 1, front, out hit, rayLength) && hit.transform.tag == "Player")
         {
             if (!Player.GetComponent<PlayerMotion>().isCrouching || chasing)
