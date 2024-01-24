@@ -152,7 +152,7 @@
                     "id": "ab326d5a-9648-430a-9fbf-568c2e44233e",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "ScaleVector2(x=15,y=15)",
+                    "processors": "ScaleVector2(x=10,y=10)",
                     "groups": "",
                     "action": "Turn",
                     "isComposite": false,
