@@ -108,6 +108,7 @@ public class WalkerNav : MonoBehaviour
 
     private void chasingPlayer()
     {
+        walkerAnim.SetBool("Running", true);
         Agent.speed = runningSpeed;
         Agent.destination = Player.transform.position;
         chasing = true;
@@ -119,7 +120,7 @@ public class WalkerNav : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 front = transform.TransformDirection(Vector3.forward);
-        if (Physics.SphereCast(transform.position, 1, front, out hit, rayLength) && hasLineOfSight())
+        if (Physics.SphereCast(transform.position, 1, front, out hit, rayLength) && hit.transform.tag == "Player" && hasLineOfSight())
         {
             if (!Player.GetComponent<PlayerMotion>().isCrouching || chasing)
             {

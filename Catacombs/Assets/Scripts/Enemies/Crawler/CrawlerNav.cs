@@ -107,15 +107,15 @@ public class CrawlerNav : MonoBehaviour
         if (lastBuild==attackBuildUp)
         {
             attackBuildUp -= Time.deltaTime;
-            aSpeed = -1;
+            aSpeed = -1f;
             if (attackBuildUp <= 0)
             {
                 attackBuildUp = 0;
                 aInRoom = false;
-                aSpeed = 1;
+                aSpeed = 1f;
             }
         }
-        if (attackBuildUp >= 5f)
+        if (attackBuildUp >= 10f)
         {
             grabCooldown = false;
             chasing = true;
