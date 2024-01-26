@@ -119,7 +119,7 @@ public class WalkerNav : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 front = transform.TransformDirection(Vector3.forward);
-        if (Physics.SphereCast(transform.position, 1, front, out hit, rayLength) && hit.transform.tag == "Player")
+        if (Physics.SphereCast(transform.position, 1, front, out hit, rayLength) && hasLineOfSight())
         {
             if (!Player.GetComponent<PlayerMotion>().isCrouching || chasing)
             {
@@ -127,6 +127,17 @@ public class WalkerNav : MonoBehaviour
             }
         }
     }
+
+    private bool hasLineOfSight()
+    {
+        Physics.Raycast(transform.position, Player.transform.position - transform.position, out RaycastHit hit);
+        if (hit.collider != null)
+        {
+            return hit.collider.CompareTag("Player");
+        }
+        return false;
+    }
+
     private void largeSphereDetect()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, sphereSize);
@@ -184,7 +195,6 @@ public class WalkerNav : MonoBehaviour
         walkerAnim.SetBool("Attacking", true);
         yield return new WaitForSeconds(2);
         transform.position -= .25f * Vector3.forward;
-        Debug.Log("Damaged");
         grabCooldown = true;
         walkerAnim.SetBool("Attacking", false);
         yield return new WaitForSeconds(5);

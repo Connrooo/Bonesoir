@@ -56,7 +56,6 @@ public class CrawlerNav : MonoBehaviour
         {
             rotToPipe();
         }
-        Debug.Log(turningBack);
     }
 
     private void stateCheck()
