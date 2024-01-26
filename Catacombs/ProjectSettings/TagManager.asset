@@ -15,6 +15,7 @@ TagManager:
   - Door
   - Torch
   - Money
+  - light
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - NavWall
   - Player
   - Interactables
-  - 
-  - 
+  - Pouch
+  - Not Affected By Light
   - 
   - 
   - 
