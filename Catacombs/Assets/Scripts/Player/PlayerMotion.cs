@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
+using UnityEditor;
 
 public class PlayerMotion : MonoBehaviour
 {
