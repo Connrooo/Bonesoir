@@ -22,6 +22,7 @@ public class PlayerMotion : MonoBehaviour
     public bool isSprinting = false; //Checks if the player is currently Sprinting
     [SerializeField] Image sprintProgress; //Progress bar for sprinting
     float sprintTimer;
+    bool spUpdate = false;
     [Header("Crouch Values")]
     public bool isCrouching;
     [SerializeField] CapsuleCollider playerCollider;
@@ -36,6 +37,7 @@ public class PlayerMotion : MonoBehaviour
         pRB = GetComponent<Rigidbody>();
         cameraObject = Camera.main.transform;
         playerCollider = GetComponent<CapsuleCollider>();
+        StartCoroutine(spProAnim());
     }
     public void MovementHandler()
     {
@@ -84,7 +86,12 @@ public class PlayerMotion : MonoBehaviour
 
     private void SprintCooldown()
     {
-        sprintProgress.fillAmount = sprintTimer / sprintCooldown;
+        if (spUpdate)
+        {
+            sprintProgress.fillAmount = 1 - (sprintTimer / sprintCooldown);
+            spUpdate = false;
+            StartCoroutine(spProAnim());
+        }
         if (sprintTimer == sprintCooldown && PInputManager.sprintInput)
         {
             sprintToggle = false;
@@ -93,6 +100,12 @@ public class PlayerMotion : MonoBehaviour
         {
             sprintToggle= true;
         }
+    }
+
+    IEnumerator spProAnim()
+    {
+        yield return new WaitForSeconds(1/8f);
+        spUpdate = true;
     }
 
     private void sprintIf()

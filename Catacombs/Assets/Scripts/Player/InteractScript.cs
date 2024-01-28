@@ -31,7 +31,6 @@ public class InteractScript : MonoBehaviour
     [SerializeField] float collectCharge;
     int moneyCheck;
     bool stopRot;
-    int x;
 
     void Awake()
     {

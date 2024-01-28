@@ -38,6 +38,6 @@ Material:
     m_Ints: []
     m_Floats:
     - _colorResolution: 9
-    - _ditherSpread: -0.012
+    - _ditherSpread: -0.02
     m_Colors: []
   m_BuildTextureStacks: []

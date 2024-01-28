@@ -10,6 +10,7 @@ public class EnemyInteractions : MonoBehaviour
     PlayerMotion PlayerMotion;
     Transform cameraObject;
     PInputManager pInputManager;
+    HealthScript healthScript;
     [Header("Enemy Turn")]
     [SerializeField] private float smoothTurnSpeed = 2;
     Quaternion targetRotation;
@@ -37,6 +38,7 @@ public class EnemyInteractions : MonoBehaviour
         PlayerMotion = GetComponent<PlayerMotion>();
         cameraObject = Camera.main.transform;
         pInputManager = FindObjectOfType<PInputManager>();
+        healthScript = FindObjectOfType<HealthScript>();
     }
 
     // Update is called once per frame
@@ -138,6 +140,7 @@ public class EnemyInteractions : MonoBehaviour
         candleLight.SetActive(false);
         turnStart = true;
         yield return new WaitForSeconds(2);
+        healthScript.hurt();
         returnR = true;
         turnStart = false;
         yield return new WaitForSeconds(smoothTurnSpeed * Time.deltaTime * 20);
@@ -159,6 +162,7 @@ public class EnemyInteractions : MonoBehaviour
         turnStart = false;
         returnR = true;
         legs.SetActive(false);
+        candleLight.SetActive(false);
         snatchAnim.SetBool("attack", false);
         yield return new WaitForSeconds(smoothTurnSpeed * Time.deltaTime * 20);
         returnR = false;
@@ -171,6 +175,7 @@ public class EnemyInteractions : MonoBehaviour
         if (!snatchEscaped && snatchGrabbed)
         {
             Debug.Log("Damaged");
+            healthScript.hurt();
             snatchEscaped = false;
             snatchGrabbed = false;
             StartCoroutine(snatchTurnAway());
@@ -183,7 +188,6 @@ public class EnemyInteractions : MonoBehaviour
             snatchEscaped = false;
             if (!snatchGrabbed)
             {
-                candleLight.SetActive(false);
                 currentRotation = cameraObject.transform.rotation;
                 snatchGrabbed = true;
                 StartCoroutine(snatchTurnTo());
@@ -215,6 +219,7 @@ public class EnemyInteractions : MonoBehaviour
         targetRotation.z = 0;
         turnStart = true;
         yield return new WaitForSeconds(2);
+        healthScript.hurt();
         returnR = true;
         turnStart = false;
         yield return new WaitForSeconds(smoothTurnSpeed * Time.deltaTime * 20);
