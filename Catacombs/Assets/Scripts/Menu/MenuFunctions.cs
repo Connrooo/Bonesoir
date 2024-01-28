@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuFunctions : MonoBehaviour
 {
-    GameObject menu;
-    GameObject settings;
+    [SerializeField] GameObject menu;
+    [SerializeField] GameObject settings;
 
     public void Enter()
     {

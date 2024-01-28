@@ -2,61 +2,95 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public TMP_Dropdown resolutionDropdown;
-
+    CameraScript cameraScript;
+    [SerializeField] TMP_Dropdown dropdown;
+    [SerializeField] Slider sensitivitySlider;
+    [SerializeField] Slider soundsSlider;
+    [SerializeField] AudioMixer audioMixer;
     Resolution[] resolutions;
+    List<Resolution> filteredResolutions;
+    RefreshRate currentRefreshRate;
+    int currentResIndex = 0;
+    public static float sensMult { get; private set; }
+
 
     void Start()
     {
+        cameraScript=FindObjectOfType<CameraScript>();
         resolutions = Screen.resolutions;
+        filteredResolutions = new List<Resolution>();
 
-        resolutionDropdown.ClearOptions();
+        dropdown.ClearOptions();
+        currentRefreshRate = Screen.currentResolution.refreshRateRatio;
 
-        List<string> options = new List<string>();
+        //Debug.Log("RefreshRate: " + currentRefreshRate);
 
-        int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            //Debug.Log("Resolutions: " + resolutions[i]);
+            if (resolutions[i].refreshRateRatio.value == currentRefreshRate.value)
             {
-                currentResolutionIndex = i;
+                filteredResolutions.Add(resolutions[i]);
             }
         }
 
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
-    }
+        List<string> options = new List<string>();
+        for (int i = 0; i< filteredResolutions.Count; i++)
+        {
+            string resolutionOption = filteredResolutions[i].width + "x" + filteredResolutions[i].height;
+            options.Add(resolutionOption);
+            if (i == filteredResolutions.Count-1)
+            {
+                currentResIndex = i;
+            }
+        }
+        dropdown.AddOptions(options);
+        dropdown.value= currentResIndex;
+        dropdown.RefreshShownValue();
 
-    public void SetResolution(int resolutionIndex)
+    }
+    public void setResolution()
     {
-        Resolution resolution = resolutions[resolutionIndex];
+        Resolution resolution = filteredResolutions[dropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    public void SetVolume(float volume)
+    public void SetFullscreen()
     {
-        //audioMixer.SetFloat("Volume", volume);
+        Screen.fullScreen = !Screen.fullScreen;
     }
 
-    public void SetQuality(int qualityIndex)
+    private void OnEnable()
     {
-        QualitySettings.SetQualityLevel(qualityIndex);
+        soundsSlider.onValueChanged.AddListener(SetMixerVolume);
+        sensitivitySlider.onValueChanged.AddListener(SetSensitivity);
     }
 
-    public void SetFullscreen(bool isFullscreen)
+    private void OnDisable()
     {
-        Screen.fullScreen = isFullscreen;
+        soundsSlider.onValueChanged.RemoveListener(SetMixerVolume);
+        sensitivitySlider.onValueChanged.RemoveListener(SetSensitivity);
     }
-    public void LoadMenu()
+
+    void SetSensitivity(float value)
     {
-        SceneManager.LoadScene(0);
+        sensMult = value * 5;
+        if (sensMult<0.05)
+        {
+            sensMult = 0.05f;
+        }
+        Debug.Log(sensMult);
     }
+
+    void SetMixerVolume(float value)
+    {
+
+    }
+
 }

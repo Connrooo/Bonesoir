@@ -10,7 +10,6 @@ public class CameraScript : MonoBehaviour
     [Header("Camera Sensitivity")]
     [SerializeField] private float cameraLookSpeed = 0.2f;
     [SerializeField] private float cameraPivotSpeed = 0.2f;
-
     [Header("")]
     [SerializeField] private float lookDampSpeed;
     [SerializeField] private float upMin;
@@ -42,8 +41,8 @@ public class CameraScript : MonoBehaviour
         Vector3 rotation;
         Quaternion targetRotation;
 
-        lookAngle = lookAngle + (PInputManager.cameraInputX * cameraLookSpeed);
-        pivotAngle = pivotAngle - (PInputManager.cameraInputY * cameraPivotSpeed);
+        lookAngle = lookAngle + (PInputManager.cameraInputX * cameraLookSpeed* SettingsMenu.sensMult);
+        pivotAngle = pivotAngle - (PInputManager.cameraInputY * cameraPivotSpeed* SettingsMenu.sensMult);
         pivotAngle = Mathf.Clamp(pivotAngle, downMax, upMax);
         if (pivotAngle > upMin)
         {
