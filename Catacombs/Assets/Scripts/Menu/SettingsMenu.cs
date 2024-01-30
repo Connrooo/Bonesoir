@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -10,14 +11,14 @@ public class SettingsMenu : MonoBehaviour
 {
     CameraScript cameraScript;
     [SerializeField] TMP_Dropdown dropdown;
-    [SerializeField] Slider sensitivitySlider;
-    [SerializeField] Slider soundsSlider;
-    [SerializeField] AudioMixer audioMixer;
+    public Slider sensitivitySlider;
+    public Slider soundsSlider;
+    public AudioMixer audioMixer;
     Resolution[] resolutions;
     List<Resolution> filteredResolutions;
     RefreshRate currentRefreshRate;
     int currentResIndex = 0;
-    public static float sensMult { get; private set; }
+    public static float sensMult;
 
 
     void Start()
@@ -66,6 +67,11 @@ public class SettingsMenu : MonoBehaviour
         Screen.fullScreen = !Screen.fullScreen;
     }
 
+    private void Update()
+    {
+        Debug.Log(sensMult);
+    }
+
     private void OnEnable()
     {
         soundsSlider.onValueChanged.AddListener(SetMixerVolume);
@@ -85,12 +91,20 @@ public class SettingsMenu : MonoBehaviour
         {
             sensMult = 0.05f;
         }
-        Debug.Log(sensMult);
+        PlayerPrefs.SetFloat("SensKey", sensMult);
     }
 
     void SetMixerVolume(float value)
     {
-
+        if (value <= 0f)
+        {
+            audioMixer.SetFloat(PlayerPreferences.MIXER, -80);
+        }
+        else
+        {
+            audioMixer.SetFloat(PlayerPreferences.MIXER, Mathf.Log10(value) * 20);
+        }
+        PlayerPrefs.SetFloat("AudioKey", value);
     }
 
 }

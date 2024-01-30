@@ -15,6 +15,6 @@ public class Sound
     public bool loop;
     public bool playOnAwake;
 
-    [HideInInspector] public AudioSource audioSource;
+    public AudioSource audioSource;
     public AudioMixerGroup mixerGroup;
 }

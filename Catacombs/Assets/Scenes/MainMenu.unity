@@ -498,7 +498,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
-  sounds: []
+  sounds:
+  - name: test
+    clip: {fileID: 8300000, guid: d64e4ab568ba4794889bf1e1f29984b6, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 1
+    playOnAwake: 1
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
 --- !u!1 &339114759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3603,7 +3611,7 @@ MonoBehaviour:
   dropdown: {fileID: 1324727828}
   sensitivitySlider: {fileID: 218803401}
   soundsSlider: {fileID: 865830693}
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
 --- !u!1 &1300314587
 GameObject:
   m_ObjectHideFlags: 0
@@ -6390,6 +6398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3136348681464023529}
   - component: {fileID: 9178305857764796771}
+  - component: {fileID: 9178305857764796772}
   m_Layer: 0
   m_Name: MenuController
   m_TagString: Untagged
@@ -6425,6 +6434,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 1156276479}
+  settings: {fileID: 1280576009}
+--- !u!114 &9178305857764796772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060429186507208417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e1a72ae05900a4b956b4ac1827c693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
   settings: {fileID: 1280576009}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
