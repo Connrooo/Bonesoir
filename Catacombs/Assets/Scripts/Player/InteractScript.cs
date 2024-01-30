@@ -102,9 +102,9 @@ public class InteractScript : MonoBehaviour
     private void collectFunction()
     {
         collectCharge += Time.deltaTime * moneyCheck;
-        if (collectCharge <= 0)
+        if (collectCharge <= 2)
         {
-            collectCharge = 0;
+            collectCharge = 2;
         }
         moneyBagAngle.x = collectCharge * mBAngleAmount;
         moneyBagAngle.y = collectCharge * -mBAngleAmount;

@@ -17,13 +17,14 @@ public class PlayerPreferences : MonoBehaviour
     float _sensitivity;
 
 
-    private void Awake()
+    private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
         settingsMenu = settings.GetComponent<SettingsMenu>();
-
+        
         LoadSensitivity();
         LoadVolume();
+        audioManager.Play("test");
     }
 
 
@@ -37,7 +38,7 @@ public class PlayerPreferences : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetFloat("SensKey", 0.2f);
+            PlayerPrefs.SetFloat("SensKey", 1f);
             _sensitivity = PlayerPrefs.GetFloat(_sensKey, 1f);
             settingsMenu.sensitivitySlider.value = _sensitivity*0.2f;
             SettingsMenu.sensMult = PlayerPrefs.GetFloat("SensKey");
