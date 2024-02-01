@@ -502,9 +502,10 @@ MonoBehaviour:
   - name: test
     clip: {fileID: 8300000, guid: d64e4ab568ba4794889bf1e1f29984b6, type: 3}
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 1
     playOnAwake: 1
+    spaceInWorld: 1
     audioSource: {fileID: 0}
     mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
 --- !u!1 &339114759
