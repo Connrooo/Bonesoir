@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerPreferences : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class PlayerPreferences : MonoBehaviour
     public const string _audioKey = "AudioKey";
     public const string _sensKey = "SensKey";
     public const string MIXER = "MIXER";
-    float _sensitivity;
 
 
     private void Start()
@@ -30,34 +30,14 @@ public class PlayerPreferences : MonoBehaviour
 
     public void LoadSensitivity()
     {
-        if (PlayerPrefs.HasKey("SensKey"))
-        {
-            _sensitivity = PlayerPrefs.GetFloat(_sensKey, 1f);
-            settingsMenu.sensitivitySlider.value = _sensitivity * 0.2f;
-            SettingsMenu.sensMult = PlayerPrefs.GetFloat("SensKey");
-        }
-        else
-        {
-            PlayerPrefs.SetFloat("SensKey", 1f);
-            _sensitivity = PlayerPrefs.GetFloat(_sensKey, 1f);
-            settingsMenu.sensitivitySlider.value = _sensitivity*0.2f;
-            SettingsMenu.sensMult = PlayerPrefs.GetFloat("SensKey");
-        }
+        float _sensitivity = PlayerPrefs.GetFloat(_sensKey, 1f);
+        settingsMenu.sensitivitySlider.value = _sensitivity * 0.2f;
+        SettingsMenu.sensMult = _sensitivity;
     }
     public void LoadVolume()
     {
-        if (PlayerPrefs.HasKey("AudioKey"))
-        {
-            float volume = PlayerPrefs.GetFloat("AudioKey", 1f);
-            audioMixer.SetFloat(MIXER, Mathf.Log10(volume) * 20);
-            settingsMenu.soundsSlider.value = PlayerPrefs.GetFloat(_audioKey, 1f);
-        }
-        else
-        {
-            PlayerPrefs.SetFloat("AudioKey", 1f);
-            float volume = PlayerPrefs.GetFloat("AudioKey", 1f);
-            audioMixer.SetFloat(MIXER, Mathf.Log10(volume) * 20);
-            settingsMenu.soundsSlider.value = PlayerPrefs.GetFloat(_audioKey, 1f);
-        }
+        float temp = PlayerPrefs.GetFloat(_audioKey, 1f);
+        audioMixer.SetFloat(MIXER, Mathf.Log10(temp) * 20);
+        settingsMenu.soundsSlider.value = temp;
     }
 }

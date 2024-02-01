@@ -62,16 +62,10 @@ public class SettingsMenu : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    public void SetFullscreen()
+    public void SetFullscreen(bool value)
     {
-        Screen.fullScreen = !Screen.fullScreen;
+        Screen.fullScreen = value;
     }
-
-    private void Update()
-    {
-        Debug.Log(sensMult);
-    }
-
     private void OnEnable()
     {
         soundsSlider.onValueChanged.AddListener(SetMixerVolume);

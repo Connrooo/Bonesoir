@@ -11,8 +11,7 @@ public class HealthScript : MonoBehaviour
 
     public void hurt()
     {
-        health--;
-        heartSprites[health].sprite = brokenHeartSprite;
+        heartSprites[--health].sprite = brokenHeartSprite;
         if (health<=0)
         {
             Debug.Log("dead");
