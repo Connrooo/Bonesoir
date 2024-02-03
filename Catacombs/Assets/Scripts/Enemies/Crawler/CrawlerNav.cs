@@ -40,6 +40,8 @@ public class CrawlerNav : MonoBehaviour
     public float aSpeed;
     private bool turningBack;
 
+    bool playerAttacking;
+
     void Start()
     {
         crawlerStartRot = transform.rotation;
@@ -159,13 +161,6 @@ public class CrawlerNav : MonoBehaviour
     {
         switch (col.tag)
         {
-            case "pipeHole":
-                aChasing = false;
-                justChased = false;
-                atPlayer = false;
-                inHole = true;
-                turningBack = true;
-                break;
             case "Player":
                 if (!inHole)
                 {
@@ -174,6 +169,14 @@ public class CrawlerNav : MonoBehaviour
                     StartCoroutine(playerSecured());
                 }
                 break;
+            case "pipeHole":
+                aChasing = false;
+                justChased = false;
+                atPlayer = false;
+                inHole = true;
+                turningBack = true;
+                break;
+            
         }
     }
 
@@ -191,6 +194,7 @@ public class CrawlerNav : MonoBehaviour
             }
         }
     }
+
     private void freezeChaser()
     {
         Agent.destination = transform.position;
@@ -216,7 +220,6 @@ public class CrawlerNav : MonoBehaviour
         yield return new WaitForSeconds(2);
         LegModel.SetActive(false);
         aAttack = false;
-        Debug.Log("Damaged");
         justChased = true;
         chasing = false;
     }

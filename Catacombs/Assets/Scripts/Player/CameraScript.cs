@@ -19,8 +19,6 @@ public class CameraScript : MonoBehaviour
     [SerializeField] private float lookAngle;
     [SerializeField] private float pivotAngle;
     [SerializeField] private Transform player;
-    [Header("Grabbed")]
-    public bool grabbed = false;
 
     private void Awake()
     {
@@ -31,7 +29,7 @@ public class CameraScript : MonoBehaviour
 
     public void CameraFunction()
     {
-        if (!grabbed)
+        if (!NewEnemyInteract.grabbed)
         {
             CameraMovement();
         }

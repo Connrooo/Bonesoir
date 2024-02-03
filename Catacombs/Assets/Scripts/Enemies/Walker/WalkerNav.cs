@@ -30,6 +30,7 @@ public class WalkerNav : MonoBehaviour
     [SerializeField] GameObject body;
     [Header("Animator")]
     [SerializeField] Animator walkerAnim;
+    bool playerAttacking;
     // Start is called before the first frame update
     void Start()
     {
@@ -172,14 +173,35 @@ public class WalkerNav : MonoBehaviour
                 toA = true;
                 break;
             case "Player":
+                playerAttacking = true;
                 if (!grabCooldown)
                 {
                     grabbedPlayer = true;
                     toP = false;
                     StartCoroutine(playerSecured());
                 }
-                
                 break;
+        }
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            playerAttacking = false;
+        }
+    }
+
+    private void OnTriggerStay(Collider col)
+    {
+        if (col.tag == "Player"&& playerAttacking == true)
+        {
+            if (!grabCooldown)
+            {
+                grabbedPlayer = true;
+                toP = false;
+                StartCoroutine(playerSecured());
+            }
         }
     }
 
@@ -191,6 +213,7 @@ public class WalkerNav : MonoBehaviour
 
     IEnumerator playerSecured()
     {
+        playerAttacking = false;
         transform.position += .25f * Vector3.forward;
         walkerAnim.SetBool("Running", false);
         walkerAnim.SetBool("Attacking", true);

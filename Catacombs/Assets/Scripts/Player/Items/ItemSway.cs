@@ -22,7 +22,7 @@ public class ItemSway : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerMotion.grabbed)
+        if (!NewEnemyInteract.grabbed)
         {
             Quaternion rotationX = Quaternion.AngleAxis(pInputManager.cameraInputY * swayMultiplier, Vector3.right);
             Quaternion rotationY = Quaternion.AngleAxis(-pInputManager.cameraInputX * swayMultiplier, Vector3.up);

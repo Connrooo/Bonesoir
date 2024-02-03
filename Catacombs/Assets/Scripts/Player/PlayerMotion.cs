@@ -8,7 +8,7 @@ using UnityEditor;
 public class PlayerMotion : MonoBehaviour
 {
     PInputManager PInputManager;
-    Vector3 moveDirection;
+    public Vector3 moveDirection;
     Transform cameraObject;
     Rigidbody pRB;
     [Header("Player Speed")]
@@ -27,8 +27,6 @@ public class PlayerMotion : MonoBehaviour
     public bool isCrouching;
     [SerializeField] CapsuleCollider playerCollider;
     [SerializeField] float crouchValue;
-    [Header("Grabbed")]
-    public bool grabbed = false;
     
 
     private void Awake()
@@ -41,12 +39,12 @@ public class PlayerMotion : MonoBehaviour
     }
     public void MovementHandler()
     {
-        if (!grabbed)
+        if (!NewEnemyInteract.grabbed)
         {
             Crouch();
             Move();
         }
-        if (grabbed)
+        if (NewEnemyInteract.grabbed)
         {
             SprintCooldown();
             sprintIf();

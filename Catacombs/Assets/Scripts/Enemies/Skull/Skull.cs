@@ -8,14 +8,16 @@ public class Skull : MonoBehaviour
     [SerializeField] GameObject skullVisual;
     [SerializeField] float skullRay = 2;
     [SerializeField] Animator skullAnim;
-    EnemyInteractions enemyInteractions;
+    //EnemyInteractions enemyInteractions;
+    NewEnemyInteract newEnemyInteract;
     Vector3 lookAt;
     bool killIt;
     // Start is called before the first frame update
     private void Awake()
     {
         Player = GameObject.FindWithTag("Player");
-        enemyInteractions = Player.GetComponent<EnemyInteractions>();
+        //enemyInteractions = Player.GetComponent<EnemyInteractions>();
+        newEnemyInteract = Player.GetComponent<NewEnemyInteract>();
     }
 
     // Update is called once per frame
@@ -36,7 +38,7 @@ public class Skull : MonoBehaviour
         {
             if (hit.collider.tag == "Player" && !killIt)
             {
-                enemyInteractions.skullObject = gameObject;
+                newEnemyInteract.skullObject = gameObject;
                 killIt = true;
                 StartCoroutine(skullAttack());
             }
@@ -45,7 +47,7 @@ public class Skull : MonoBehaviour
     IEnumerator skullAttack()
     {
         skullAnim.SetTrigger("attack");
-        enemyInteractions.skullAttacked = true;
+        newEnemyInteract.skullAttacked = true;
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
