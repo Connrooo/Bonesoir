@@ -30,6 +30,10 @@ public class PInputManager : MonoBehaviour
     public bool scrollForward;
     public bool scrollBackward;
 
+    [Header("Pause Menu Controls")]
+    public bool pauseButton;
+    public bool unpauseButton;
+
     private void OnEnable()
     {
         if (PlayerInput == null)
@@ -47,6 +51,8 @@ public class PInputManager : MonoBehaviour
             PlayerInput.Main.InvScrollForward.canceled += i => scrollForward = false;
             PlayerInput.Main.InvScrollBackward.performed += i => scrollBackward = true;
             PlayerInput.Main.InvScrollBackward.canceled += i => scrollBackward = false;
+            PlayerInput.Main.Pause.performed += i => pauseButton = true;
+            PlayerInput.Main.Unpause.performed += i => unpauseButton = true;
         }
         PlayerInput.Enable();
     }

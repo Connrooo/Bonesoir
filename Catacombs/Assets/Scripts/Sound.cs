@@ -14,8 +14,8 @@ public class Sound
     public float pitch = 1;
     public bool loop;
     public bool playOnAwake;
-    [Range(0f,1)]
-    public float spaceInWorld;
+    [Range(-1f, 1f)]
+    public float direction;
 
     public AudioSource audioSource;
     public AudioMixerGroup mixerGroup;

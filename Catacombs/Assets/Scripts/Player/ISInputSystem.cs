@@ -89,6 +89,24 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8bd182e-4ee7-4a2b-9103-fec13296f05b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Unpause"",
+                    ""type"": ""Button"",
+                    ""id"": ""1fe2fea9-7f8b-4df4-bd43-ef1386e89544"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -322,6 +340,61 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""InvScrollBackward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53190682-886f-42f8-acd9-378e451d772e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9b8fe44-6732-42d5-8423-b72e9fc7dba9"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ad1800c-6247-4783-9fa8-f91d397121c9"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""676758ac-c158-40b2-90d4-97d3844e928b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cffa6017-86e5-4a63-b901-7580b73af9b3"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -337,6 +410,8 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
         m_Main_Crouch = m_Main.FindAction("Crouch", throwIfNotFound: true);
         m_Main_InvScrollForward = m_Main.FindAction("InvScrollForward", throwIfNotFound: true);
         m_Main_InvScrollBackward = m_Main.FindAction("InvScrollBackward", throwIfNotFound: true);
+        m_Main_Pause = m_Main.FindAction("Pause", throwIfNotFound: true);
+        m_Main_Unpause = m_Main.FindAction("Unpause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +480,8 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Crouch;
     private readonly InputAction m_Main_InvScrollForward;
     private readonly InputAction m_Main_InvScrollBackward;
+    private readonly InputAction m_Main_Pause;
+    private readonly InputAction m_Main_Unpause;
     public struct MainActions
     {
         private @ISInputSystem m_Wrapper;
@@ -416,6 +493,8 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Main_Crouch;
         public InputAction @InvScrollForward => m_Wrapper.m_Main_InvScrollForward;
         public InputAction @InvScrollBackward => m_Wrapper.m_Main_InvScrollBackward;
+        public InputAction @Pause => m_Wrapper.m_Main_Pause;
+        public InputAction @Unpause => m_Wrapper.m_Main_Unpause;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -446,6 +525,12 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
             @InvScrollBackward.started += instance.OnInvScrollBackward;
             @InvScrollBackward.performed += instance.OnInvScrollBackward;
             @InvScrollBackward.canceled += instance.OnInvScrollBackward;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @Unpause.started += instance.OnUnpause;
+            @Unpause.performed += instance.OnUnpause;
+            @Unpause.canceled += instance.OnUnpause;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -471,6 +556,12 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
             @InvScrollBackward.started -= instance.OnInvScrollBackward;
             @InvScrollBackward.performed -= instance.OnInvScrollBackward;
             @InvScrollBackward.canceled -= instance.OnInvScrollBackward;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @Unpause.started -= instance.OnUnpause;
+            @Unpause.performed -= instance.OnUnpause;
+            @Unpause.canceled -= instance.OnUnpause;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -497,5 +588,7 @@ public partial class @ISInputSystem: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnInvScrollForward(InputAction.CallbackContext context);
         void OnInvScrollBackward(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnUnpause(InputAction.CallbackContext context);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class NewEnemyInteract : MonoBehaviour
 {
-    HealthScript healthScript;
+    AudioManager audioManager;
     PlayerMotion playerMotion;
     PInputManager pInputManager;
     Transform cameraObject;
@@ -32,13 +32,15 @@ public class NewEnemyInteract : MonoBehaviour
     bool snatcherEscaped;
     Animator snatchAnim;
     GameObject legs;
+
+    bool canJumpscare;
     // Start is called before the first frame update
     void Awake()
     {
         cameraObject = Camera.main.transform;
-        healthScript = FindObjectOfType<HealthScript>();
         playerMotion = FindObjectOfType<PlayerMotion>();
         pInputManager = FindObjectOfType<PInputManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -100,6 +102,11 @@ public class NewEnemyInteract : MonoBehaviour
 
     private void turnToEnemy()
     {
+        if (!canJumpscare)
+        {
+            canJumpscare = true;
+            audioManager.Play("Jumpscare");
+        }
         cameraObject.transform.rotation = Quaternion.Slerp(cameraObject.transform.rotation, targetRotation, smoothTurnSpeed * Time.deltaTime);
         transform.position = currentPosition;
         if (isSnatcher)
@@ -110,7 +117,12 @@ public class NewEnemyInteract : MonoBehaviour
     }
     private void returnRotation()
     {
-        candleLight.SetActive(false);
+        canJumpscare = false;
+        if (candleLight.activeSelf)
+        {
+            audioManager.Play("Candle Blow Out");
+            candleLight.SetActive(false);
+        }
         isSnatcher = false;
         snatcherEscaped = false;
         cameraObject.transform.rotation = Quaternion.Slerp(cameraObject.transform.rotation, currentRotation, smoothTurnSpeed * Time.deltaTime);

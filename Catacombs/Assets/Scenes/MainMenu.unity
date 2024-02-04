@@ -499,13 +499,130 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
   sounds:
-  - name: test
-    clip: {fileID: 8300000, guid: d64e4ab568ba4794889bf1e1f29984b6, type: 3}
-    volume: 1
+  - name: Low Hum
+    clip: {fileID: 8300000, guid: 57026e2471c410e4596d0058ff78ab01, type: 3}
+    volume: 0.6
     pitch: 1
     loop: 1
     playOnAwake: 1
-    spaceInWorld: 1
+    direction: 0
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Background Noise
+    clip: {fileID: 8300000, guid: 87d2302cdddc3c34e8351e38549d7022, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 1
+    playOnAwake: 1
+    direction: 0
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Button Press
+    clip: {fileID: 8300000, guid: a2d0df6c2ded8444eb4abfef7cc14a18, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Begin Game
+    clip: {fileID: 8300000, guid: 62d234d251b873b42b09d5d05dd440f9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Bag Zip #1
+    clip: {fileID: 8300000, guid: 40a11b6aa6e8f6044b058fa4c43b5e6c, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0.2
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Bag Zip #2
+    clip: {fileID: 8300000, guid: 6f704e9ed4a6e734f8d5460979abbbd7, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0.2
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Coin Pull #1
+    clip: {fileID: 8300000, guid: 90cd6b0a07e2f9e42864c1dcaf710e5d, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0.2
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Coin Pull #2
+    clip: {fileID: 8300000, guid: 549f9975efd0d584eae6eb3355b8fc48, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0.2
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Candle Pull
+    clip: {fileID: 8300000, guid: ff2bf1b05dfdd93428da66e7a45d4f66, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0.2
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Candle Flame
+    clip: {fileID: 8300000, guid: 9c7cc34d576821441a880ff69fb9222a, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    direction: 0.2
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Candle Blow Out
+    clip: {fileID: 8300000, guid: 4d567bf68bfeb9944bf287816bc51c3f, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0.2
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Treasure Collect
+    clip: {fileID: 8300000, guid: 8a1d9163c5149804394f40f13e4dbe59, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Jumpscare
+    clip: {fileID: 8300000, guid: c0055a2d3f39be048ba56fa5ede69fab, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0
+    audioSource: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
+  - name: Out Of Breath
+    clip: {fileID: 8300000, guid: d030fc41f5cd2d943a4bea3dcc82eda6, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    direction: 0
     audioSource: {fileID: 0}
     mixerGroup: {fileID: 24300002, guid: c30f8f2ab27272f47b8cae56cbdb9081, type: 2}
 --- !u!1 &339114759
@@ -4250,6 +4367,7 @@ GameObject:
   - component: {fileID: 1465379866}
   - component: {fileID: 1465379865}
   - component: {fileID: 1465379864}
+  - component: {fileID: 1465379867}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -4340,6 +4458,27 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!95 &1465379867
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465379862}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 86e900966055680449a358f8dc82d93b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1472713161
 GameObject:
   m_ObjectHideFlags: 0
@@ -6436,6 +6575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 1156276479}
   settings: {fileID: 1280576009}
+  background: {fileID: 1465379867}
 --- !u!114 &9178305857764796772
 MonoBehaviour:
   m_ObjectHideFlags: 0

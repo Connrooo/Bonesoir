@@ -8,6 +8,7 @@ using UnityEditor;
 public class PlayerMotion : MonoBehaviour
 {
     PInputManager PInputManager;
+    AudioManager audioManager;
     public Vector3 moveDirection;
     Transform cameraObject;
     Rigidbody pRB;
@@ -27,12 +28,19 @@ public class PlayerMotion : MonoBehaviour
     public bool isCrouching;
     [SerializeField] CapsuleCollider playerCollider;
     [SerializeField] float crouchValue;
+
+    [SerializeField] AudioClip[] stepSounds;
+    AudioSource playerAudioSource;
+    bool stopStepSound;
+    float stepTime;
     
 
     private void Awake()
     {
         PInputManager = GetComponent<PInputManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         pRB = GetComponent<Rigidbody>();
+        playerAudioSource= GetComponent<AudioSource>();
         cameraObject = Camera.main.transform;
         playerCollider = GetComponent<CapsuleCollider>();
         StartCoroutine(spProAnim());
@@ -48,6 +56,7 @@ public class PlayerMotion : MonoBehaviour
         {
             SprintCooldown();
             sprintIf();
+            isSprinting = false;
         }
     }
     private void Move()
@@ -66,6 +75,7 @@ public class PlayerMotion : MonoBehaviour
         {
             isSprinting = false;
         }
+        else { PlayAudio(); }
         sprintIf();
     }
     private void Sprint()
@@ -92,6 +102,10 @@ public class PlayerMotion : MonoBehaviour
         }
         if (sprintTimer == sprintCooldown && PInputManager.sprintInput)
         {
+            if (sprintToggle)
+            {
+                audioManager.Play("Out Of Breath");
+            }
             sprintToggle = false;
         }
         if (!sprintToggle && sprintTimer==0 && !PInputManager.sprintInput)
@@ -146,5 +160,34 @@ public class PlayerMotion : MonoBehaviour
     public void treasureHeld()
     {
         defaultSpeed = defaultSpeed * .8f;
+    }
+
+    private void PlayAudio()
+    {
+        if (!stopStepSound)
+        {
+            if (isCrouching)
+            {
+                stepTime = 1.5f;
+            }
+            else if (isSprinting)
+            {
+                stepTime = .3f;
+            }
+            else
+            {
+                stepTime = 1f;
+            }
+            StartCoroutine(playStep());
+        }
+    }
+
+    IEnumerator playStep()
+    {
+        stopStepSound= true;
+        int x = Random.Range(0, stepSounds.Length);
+        playerAudioSource.PlayOneShot(stepSounds[x]);
+        yield return new WaitForSeconds(stepTime);
+        stopStepSound = false;
     }
 }

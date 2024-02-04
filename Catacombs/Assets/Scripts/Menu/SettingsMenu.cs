@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    CameraScript cameraScript;
+    AudioManager audioManager;
     [SerializeField] TMP_Dropdown dropdown;
     public Slider sensitivitySlider;
     public Slider soundsSlider;
@@ -23,7 +23,7 @@ public class SettingsMenu : MonoBehaviour
 
     void Start()
     {
-        cameraScript=FindObjectOfType<CameraScript>();
+        audioManager = FindObjectOfType<AudioManager>();
         resolutions = Screen.resolutions;
         filteredResolutions = new List<Resolution>();
 
@@ -58,12 +58,14 @@ public class SettingsMenu : MonoBehaviour
     }
     public void setResolution()
     {
+        audioManager.Play("Button Press");
         Resolution resolution = filteredResolutions[dropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
     public void SetFullscreen(bool value)
     {
+        audioManager.Play("Button Press");
         Screen.fullScreen = value;
     }
     private void OnEnable()
@@ -80,6 +82,7 @@ public class SettingsMenu : MonoBehaviour
 
     void SetSensitivity(float value)
     {
+        audioManager.Play("Button Press");
         sensMult = value * 5;
         if (sensMult<0.05)
         {
@@ -90,6 +93,7 @@ public class SettingsMenu : MonoBehaviour
 
     void SetMixerVolume(float value)
     {
+        audioManager.Play("Button Press");
         if (value <= 0f)
         {
             audioMixer.SetFloat(PlayerPreferences.MIXER, -80);

@@ -24,7 +24,6 @@ public class PlayerPreferences : MonoBehaviour
         
         LoadSensitivity();
         LoadVolume();
-        audioManager.Play("test");
     }
 
 

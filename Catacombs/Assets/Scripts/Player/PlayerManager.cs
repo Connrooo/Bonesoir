@@ -26,7 +26,6 @@ public class PlayerManager : MonoBehaviour
     {
         
     }
-
     private void FixedUpdate()
     {
         PInputManager.InputHandler();

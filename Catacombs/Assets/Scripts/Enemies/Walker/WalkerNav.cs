@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -30,11 +29,15 @@ public class WalkerNav : MonoBehaviour
     [SerializeField] GameObject body;
     [Header("Animator")]
     [SerializeField] Animator walkerAnim;
+    [SerializeField] animationTriggers animTriggers;
     bool playerAttacking;
+
+    AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
+        audioSource= GetComponent<AudioSource>();
         Agent = GetComponent<NavMeshAgent>();
     }
 
@@ -116,7 +119,6 @@ public class WalkerNav : MonoBehaviour
         toP = true;
         pOnce = true;
     }
-
     private void rayDetect()
     {
         RaycastHit hit;
@@ -213,11 +215,13 @@ public class WalkerNav : MonoBehaviour
 
     IEnumerator playerSecured()
     {
+        audioSource.PlayOneShot(animTriggers.screamSounds[Random.Range(0, animTriggers.screamSounds.Length)]);
         playerAttacking = false;
         transform.position += .25f * Vector3.forward;
         walkerAnim.SetBool("Running", false);
         walkerAnim.SetBool("Attacking", true);
         yield return new WaitForSeconds(2);
+        audioSource.Stop();
         transform.position -= .25f * Vector3.forward;
         grabCooldown = true;
         walkerAnim.SetBool("Attacking", false);

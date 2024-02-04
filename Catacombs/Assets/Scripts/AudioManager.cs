@@ -30,8 +30,19 @@ public class AudioManager : MonoBehaviour
             s.audioSource.pitch = s.pitch;
             s.audioSource.loop = s.loop;
             s.audioSource.playOnAwake = s.playOnAwake;
-            s.audioSource.spatialBlend = s.spaceInWorld;
+            s.audioSource.panStereo = s.direction;
             s.audioSource.outputAudioMixerGroup = s.mixerGroup;
+            
+        }
+    }
+    private void Start()
+    {
+        foreach (Sound s in sounds)
+        {
+            if (s.audioSource.playOnAwake)
+            {
+                s.audioSource.Play();
+            }
         }
     }
 

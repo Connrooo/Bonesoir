@@ -29,7 +29,7 @@ public class CameraScript : MonoBehaviour
 
     public void CameraFunction()
     {
-        if (!NewEnemyInteract.grabbed)
+        if (!NewEnemyInteract.grabbed&&!PauseFunctions.paused)
         {
             CameraMovement();
         }

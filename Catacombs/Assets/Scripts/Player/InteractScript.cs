@@ -6,126 +6,76 @@ using static UnityEngine.GraphicsBuffer;
 public class InteractScript : MonoBehaviour
 {
     Camera Cam;
-    PlayerMotion playerMotion;
     PInputManager pInputManager;
     InventoryScript inventoryScript;
+    AudioManager audioManager;
     [Header("Object Detection")]
     [SerializeField] private float rayLength = 5;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private string excludeLayerName = null;
-    float deltaRep;
-    [Header("Torch")]
-    Vector3 candleAngle;
-    float cAngleAmount = 10;
-    [SerializeField] GameObject candle;
     [SerializeField] GameObject candleLight;
-    [SerializeField] float lightingTime = 3;
-    [SerializeField] float lightingCharge;
-    int lightCheck;
-    [Header("Money")]
-    Vector3 moneyBagAngle;
-    float mBAngleAmount = 10;
-    [SerializeField] GameObject moneyBagEmpty;
-    [SerializeField] GameObject moneyBagFull;
-    [SerializeField] float collectTime = 5;
-    [SerializeField] float collectCharge;
-    int moneyCheck;
-    bool stopRot;
+    [SerializeField] Animator itemHandler;
+    bool interacted;
 
     void Awake()
     {
         pInputManager = FindObjectOfType<PInputManager>();
         inventoryScript = GetComponent<InventoryScript>();
+        audioManager = FindObjectOfType<AudioManager>();
         Cam = Camera.main;
     }
 
     public void InteractHandler()
     {
         InteractRaycast();
-        candleFunction();
-        collectFunction();
-        animCount();
     }
     private void InteractRaycast()
     {
-        moneyCheck = -1;
-        lightCheck = -1;
+        itemHandler.SetBool("isLighting", false);
+        itemHandler.SetBool("isCollecting", false);
         RaycastHit hit;
         Vector3 front = Cam.transform.TransformDirection(Vector3.forward);
         int mask = 1 << LayerMask.NameToLayer(excludeLayerName) | layerMaskInteract.value;
         Debug.DrawRay(Cam.transform.position, front, Color.green);
         if (Physics.Raycast(Cam.transform.position, front, out hit, rayLength, mask) && pInputManager.interactInput)
         {
-            if (hit.collider.tag == "Door")
+            switch (hit.collider.tag)
             {
-                DoorScript doorScript = hit.collider.GetComponentInParent<DoorScript>();
-                doorScript.doorOpen();
-            }
-            else if (hit.collider.tag == "Torch")
-            {
-                if (inventoryScript.invNumber == 2)
-                {
-                    lightCheck = 1;
-                    if (lightingCharge >= lightingTime)
+                case "Door":
+                    DoorScript doorScript = hit.collider.GetComponentInParent<DoorScript>();
+                    doorScript.doorOpen();
+                    break;
+                case "Torch":
+                    if (inventoryScript.invNumber == 2 && candleLight.activeSelf == false)
                     {
-                        lightingCharge = lightingTime;
-                        candleLight.SetActive(true);
+                        itemHandler.SetBool("isLighting", true);
                     }
-                }
-            }
-            else if (hit.collider.tag == "Money")
-            {
-
-                if (inventoryScript.invNumber == 1)
-                {
-                    moneyCheck = 1;
-                    if (collectCharge >= collectTime)
+                    break;
+                case "Money":
+                    if (inventoryScript.bagFull == true)
                     {
                         Destroy(hit.collider.gameObject);
-                        inventoryScript.bagFull = true;
                     }
-                }
+                    else if (inventoryScript.invNumber == 1)
+                    {
+                        itemHandler.SetBool("isCollecting", true);
+                        if (!interacted)
+                        {
+                            PlayAudio();
+                        }
+                    }
+                    break;
             }
         }
-    }
-    private void candleFunction()
-    {
-        lightingCharge += Time.deltaTime * lightCheck;
-        if (lightingCharge <= 0)
+        if (!itemHandler.GetBool("isCollecting"))
         {
-            lightingCharge = 0;
-        }
-        candleAngle.x = lightingCharge * cAngleAmount;
-        candleAngle.y = lightingCharge * -cAngleAmount;
-    }
-
-    private void collectFunction()
-    {
-        collectCharge += Time.deltaTime * moneyCheck;
-        if (collectCharge <= 2)
-        {
-            collectCharge = 2;
-        }
-        moneyBagAngle.x = collectCharge * mBAngleAmount;
-        moneyBagAngle.y = collectCharge * -mBAngleAmount;
-        
-    }
-
-    private void animCount()
-    {
-        if (!stopRot)
-        {
-            moneyBagEmpty.transform.localRotation = Quaternion.Euler(moneyBagAngle);
-            moneyBagFull.transform.localRotation = Quaternion.Euler(moneyBagAngle);
-            candle.transform.localRotation = Quaternion.Euler(candleAngle);
-            StartCoroutine(frameStop());
+            audioManager.Stop("Treasure Collect");
+            interacted = false;
         }
     }
-
-    IEnumerator frameStop()
+    private void PlayAudio()
     {
-        stopRot = true;
-        yield return new WaitForSeconds(1/12f);
-        stopRot= false;
+        interacted = true;
+        audioManager.Play("Treasure Collect");
     }
 }

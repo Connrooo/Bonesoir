@@ -40,6 +40,9 @@ public class CrawlerNav : MonoBehaviour
     public float aSpeed;
     private bool turningBack;
 
+    [SerializeField] animationTriggers animTriggers;
+    AudioSource audioSource;
+
     bool playerAttacking;
 
     void Start()
@@ -47,6 +50,7 @@ public class CrawlerNav : MonoBehaviour
         crawlerStartRot = transform.rotation;
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         Agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
         Agent.speed = crawlerSpeed;
         inPos = Legs.transform.rotation;
         LegModel.SetActive(false);
@@ -170,11 +174,14 @@ public class CrawlerNav : MonoBehaviour
                 }
                 break;
             case "pipeHole":
-                aChasing = false;
-                justChased = false;
-                atPlayer = false;
-                inHole = true;
-                turningBack = true;
+                if (justChased)
+                {
+                    aChasing = false;
+                    justChased = false;
+                    atPlayer = false;
+                    inHole = true;
+                    turningBack = true;
+                }
                 break;
             
         }
@@ -213,11 +220,12 @@ public class CrawlerNav : MonoBehaviour
 
     IEnumerator playerSecured()
     {
-        //LegsRot();
+        audioSource.PlayOneShot(animTriggers.screamSounds[Random.Range(0, animTriggers.screamSounds.Length)]);
         LegModel.SetActive(true);
         transform.LookAt(Player.transform.position);
         aAttack = true;
         yield return new WaitForSeconds(2);
+        audioSource.Stop();
         LegModel.SetActive(false);
         aAttack = false;
         justChased = true;
