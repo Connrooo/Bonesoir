@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using UnityEngine.Rendering;
 
 public class PlayerMotion : MonoBehaviour
 {
@@ -30,10 +31,13 @@ public class PlayerMotion : MonoBehaviour
     [SerializeField] float crouchValue;
 
     [SerializeField] AudioClip[] stepSounds;
+    [SerializeField] AudioClip[] runSounds;
     AudioSource playerAudioSource;
+    [SerializeField] AudioSource sprintAudioSource;
     bool stopStepSound;
     float stepTime;
-    
+    private float startTime;
+
 
     private void Awake()
     {
@@ -84,11 +88,21 @@ public class PlayerMotion : MonoBehaviour
         {
             movementSpeed = defaultSpeed * sprintMultiplier;
             isSprinting= true;
+            Debug.Log("Sprinting");
+            if (!isSprintPlaying())
+            {
+                sprintAudioSource.clip = runSounds[Random.Range(0, runSounds.Length)];
+                sprintAudioSource.Play();
+                startTime = Time.time;
+                Debug.Log("Playing");
+            }
         }
         else
         {
             movementSpeed = defaultSpeed;
             isSprinting = false;
+            startTime = Time.time-4;
+            sprintAudioSource.Stop();
         }
     }
 
@@ -176,7 +190,7 @@ public class PlayerMotion : MonoBehaviour
             }
             else
             {
-                stepTime = 1f;
+                stepTime = .75f;
             }
             StartCoroutine(playStep());
         }
@@ -189,5 +203,16 @@ public class PlayerMotion : MonoBehaviour
         playerAudioSource.PlayOneShot(stepSounds[x]);
         yield return new WaitForSeconds(stepTime);
         stopStepSound = false;
+    }
+
+    public bool isSprintPlaying()
+    {
+        if ((Time.time - startTime) >= 3.1)
+        {
+            Debug.Log("not playing audio");
+            return false;
+        }
+        Debug.Log("audio playing");
+        return true;
     }
 }
