@@ -918,7 +918,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dfa200fd6b85f4f4b98a62f0a4355f9a, type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 16375
+    m_Bits: 192
 --- !u!82 &2851702525675544664
 AudioSource:
   m_ObjectHideFlags: 0
